@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="wrapper">
+    <div class="frame">
+      <ul class="board" data-drop="true" data-jqyoui-options jqyoui-droppable="true">
+        <li ng-repeat="magnet in main.magnets"
+            class="magnet {{magnet.color}}"
+            ng-class="{selected: main.isSelected(magnet)}"
+            style="top: {{magnet.y}}px; left: {{magnet.x}}px; transform: rotate({{magnet.rotation}}deg)"
+            ng-mousedown="main.mouseDownHandler(magnet)"
+            ng-model="main.magnets"
+            data-drag="true"
+            data-jqyoui-options="{revert: 'invalid', containment: 'parent'}"
+            jqyoui-draggable="{index: {{$index}}, animate:true, onStart: 'main.dragStartHandler(magnet, $index)', onStop: 'main.dragStopHandler', onDrag: 'main.dragHandler'}">
+              {{magnet.character}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
