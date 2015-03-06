@@ -1,6 +1,7 @@
 // TODO: can I include jshint in the test config?
-// TODO: get this up on github
 // TODO: check for modern way of doing drop shadow in CSS
+// TODO: why is none of this checked in to git?
+// TODO: update selected on server
 
 (function() {
 
@@ -13,21 +14,22 @@
 
       var vm = this;
 
-      vm.id = ''; // socket id assigned to this clien
-
-      vm.magnets = [];
-      vm.magnet = {};
+      vm.id = ''; // socket id assigned to this client
+      vm.magnets = []; // our data
+      vm.selected = null;
 
       // Controller API
-      vm.addMagnet = addMagnet;
-      vm.updateMagnet = updateMagnet;
-      vm.deleteMagnet = deleteMagnet;
-      vm.selectMagnet = selectMagnet;
+      vm.setPosition = setPosition;
+      vm.setSelected = setSelected;
       vm.isSelected = isSelected;
-      vm.mouseDownHandler = mouseDownHandler;
-      vm.dragStartHandler = dragStartHandler;
-      vm.dragStopHandler = dragStopHandler;
-      vm.dragHandler = dragHandler;
+      vm.isDraggable = isDraggable;
+      vm.getClass = getClass;
+      vm.isDraggable = isDraggable;
+
+      // TODO: candidates for abstraction to a controls Controller
+      vm.setSelectedColor = setSelectedColor;
+      vm.rotateSelected = rotateSelected;
+      vm.deleteSelected = deleteSelected;
 
       // Grab the initial data
       magnetService.getMagnets().success(function(magnets) {
@@ -35,6 +37,10 @@
         $log.info('Got initial data');
 
         vm.magnets = magnets;
+
+        // vm.magnets.forEach(function(magnet) {
+        //   console.log(magnet);
+        // });
 
         // Synchronise updates to the data
         socket.syncConnect('magnet', socketConnectHandler);
@@ -50,32 +56,85 @@
       });
       */
 
-      function addMagnet() {
-        magnetService.addMagnet(vm.magnet);
+      function update(magnet) {
+        magnetService.updateMagnet(magnet);
       }
 
-      function updateMagnet() {
-        magnetService.updateMagnet(vm.magnet);
+      function setPosition(event, ui, magnet) {
+        magnet.x = ui.position.left;
+        magnet.y = ui.position.top;
+        update(magnet);
       }
 
-      function deleteMagnet(magnet) {
-        magnetService.deleteMagnet(magnet);
+      function setSelected(magnet) {
+        
+        // Check if this client has another selected magnet
+        var selected = _.findWhere(vm.magnets, { selected: vm.id });
+
+        // If he does, unselect and update
+        if (selected && selected !== magnet) {
+          selected.selected = null;
+          update(selected);
+        }
+
+        // Now select the new magnet and update
+        if (magnet.selected !== vm.id) {
+          vm.selected = magnet;
+          magnet.selected = vm.id;
+          update(magnet);
+        }
       }
 
-      function selectMagnet(magnet) {
+      function setSelectedColor(color) {
 
-        //if (vm.magnet.id) {
-        //  vm.magnet.selected = '';
-        //  updateMagnet();
-        //}
+        var selected = vm.selected;
 
-        vm.magnet = magnet;
-        vm.magnet.selected = vm.id;
-        //updateMagnet();
+        if (selected) {
+          selected.color = color;
+          update(vm.selected);
+        }
       }
 
+      function rotateSelected() {
+        
+        var selected = vm.selected;
+
+        if (selected) {
+          selected.rotation = (selected.rotation + 15) % 360;
+          update(vm.selected);
+        }
+      }
+
+      function deleteSelected() {
+
+        var selected = vm.selected;
+
+        if (selected) {
+          magnetService.deleteMagnet(vm.selected);
+        }
+      }
+
+      // TODO: I think the fact that I'm passing the magnet in to all these
+      //  functions might be an indication that I need to abstract some logic
       function isSelected(magnet) {
-        return magnet._id === vm.magnet._id;
+        return magnet.selected === vm.id;
+      }
+
+      function isDraggable(magnet) {
+        return !(magnet.selected && magnet.selected !== vm.id); 
+      }
+
+      function getClass(magnet) {
+
+        if (!magnet.selected) {
+          return;
+        }
+        if (magnet.selected === vm.id) {
+          return 'selected'; 
+        }
+        if (magnet.selected !== vm.id) {
+          return 'inactive';
+        }
       }
 
       // Listeners
@@ -86,35 +145,9 @@
 
       // Handlers
 
-      function socketConnectHandler(id) {
+      function socketConnectHandler(id, connections) {
         vm.id = id;
-      }
-
-      function mouseDownHandler(magnet) {
-        vm.selectMagnet(magnet);
-      }
-
-      function dragStartHandler(event, ui, magnet) {
-        // Strange that we have to apply here, would have expected
-        // the drag and drop service to ensure event was fired
-        // within the angular context??
-        $scope.$apply(function () {
-          vm.selectMagnet(magnet);
-        });
-      }
-
-      function dragStopHandler(event, ui) {
-
-        vm.magnet.x = ui.position.left;
-        vm.magnet.y = ui.position.top;
-
-        $scope.$apply(function() {
-          vm.updateMagnet();
-        });
-      }
-
-      function dragHandler(event, ui) {
-        //console.log('MainCtrl: dragging');
+        vm.connections = connections;
       }
   }
 

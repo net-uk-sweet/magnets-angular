@@ -5,17 +5,22 @@
 'use strict';
 
 var config = require('./environment');
+var connections = 0;
 
-// When the user disconnects.. perform this
 function onDisconnect(socket) {
+  connections --;
   console.log('%s has disconnected', socket.id);
   socket.emit('magnet:disconnect', socket.id);
 }
 
 // When the user connects.. perform this
 function onConnect(socket) {
+
+  connections ++;
+
   socket.emit('magnet:connect', socket.id);
   console.log('%s has connected', socket.id);
+
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {
     console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));

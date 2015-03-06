@@ -5,6 +5,7 @@ var controller = require('./magnet.controller');
 
 var router = express.Router();
 
+// Route URLs to the correct methods on the controller
 router.get('/', controller.index);
 router.get('/:id', controller.show);
 router.post('/', controller.create);

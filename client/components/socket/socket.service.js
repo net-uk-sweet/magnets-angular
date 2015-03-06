@@ -22,8 +22,9 @@ angular.module('magnetsApp')
 
       syncConnect: function(modelName, cb) {
 
-        socket.on(modelName + ':connect', function(id) {
-          cb(id);
+        socket.on(modelName + ':connect', function(id, connections) {
+          console.log(id);
+          cb(id, connections);
         });
       },
 
@@ -51,7 +52,6 @@ angular.module('magnetsApp')
           // replace oldItem if it exists
           // otherwise just add item to the collection
           if (oldItem) {
-            console.log('updating');
             array.splice(index, 1, item);
             event = 'updated';
           } else {

@@ -8,6 +8,7 @@
   function MagnetService($http, $log) {
 
     // AngularJS will instantiate a singleton by calling "new" on this function
+    // and caching the results to be returned to anything which requires it.
 
     var url = '/api/magnets/';
 
@@ -37,7 +38,7 @@
       addMagnet: addMagnet,
       updateMagnet: updateMagnet,
       deleteMagnet: deleteMagnet
-    }
+    };
   }
 
 })();

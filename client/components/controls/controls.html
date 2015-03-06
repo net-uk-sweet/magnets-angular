@@ -1,0 +1,19 @@
+<a href="http://ian.sweet.uk.net" id="logo" class="shadow">net.uk.sweet</a>
+<div id="toolbar">
+  <div id="menu" class="ui-panel">
+    <!-- directive required on next and previous -->
+    <button ng-click="">Previous letter</button>
+    <span id="character-selector" class="ui-button ui-state-default ui-corner-all"></span>
+    <!-- span id="character-selector"></span -->
+    <button ng-click="">Next letter</button>
+  </div>
+  <ul ng-enabled="!main.selected" class="ui-panel">
+    <li class="{{color}}" ng-repeat="color in controls.colors" ng-click="main.setSelectedColor(color)">{{color}}</li>
+  </ul>
+  <div id="utilities" class="ui-panel">
+    <!-- directive required on this one -->
+    <button ng-click="main.rotateSelected()">Rotate</button>
+    <button ng-click="main.deleteSelected()">Delete</button>
+  </div>
+</div>
+<span>{{main.connections}}</span>

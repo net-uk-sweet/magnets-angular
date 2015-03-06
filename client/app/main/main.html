@@ -4,16 +4,17 @@
       <ul class="board" data-drop="true" data-jqyoui-options jqyoui-droppable="true">
         <li ng-repeat="magnet in main.magnets"
             class="magnet {{magnet.color}}"
-            ng-class="{selected: main.isSelected(magnet)}"
+            ng-class="main.getClass(magnet)"
             style="top: {{magnet.y}}px; left: {{magnet.x}}px; transform: rotate({{magnet.rotation}}deg)"
-            ng-mousedown="main.mouseDownHandler(magnet)"
+            ng-click="main.setSelected(magnet)"
             ng-model="main.magnets"
-            data-drag="true"
+            data-drag="{{main.isDraggable(magnet)}}"
             data-jqyoui-options="{revert: 'invalid', containment: 'parent'}"
-            jqyoui-draggable="{index: {{$index}}, animate:true, onStart: 'main.dragStartHandler(magnet, $index)', onStop: 'main.dragStopHandler', onDrag: 'main.dragHandler'}">
+            jqyoui-draggable="{index: {{$index}}, animate:true, onStop: 'main.setPosition(magnet, $index)'}">
               {{magnet.character}}
         </li>
       </ul>
+      <div id="controls" ng-controller="ControlsCtrl as controls" ng-include="'components/controls/controls.html'"></div>
     </div>
   </div>
 </div>
