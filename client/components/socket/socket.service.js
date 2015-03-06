@@ -18,16 +18,17 @@ angular.module('magnetsApp')
     return {
       socket: socket,
 
-      // TODO: communication between socket, service and controller feels pretty clumsy.
-      syncConnect: function(modelName, obj) {
-        socket.on(modelName + ':connect', function(id) {
-          obj.id = id;
+      syncSocket: function(model) {
+        
+        socket.on('socket:connect', function(id, count) {
+          if (!model.id) {
+            model.id = id;
+          }
+          model.count = count;
         });
-      },
 
-      syncConnections: function(modelName, obj) {
-        socket.on(modelName + ':connections', function(connections) {
-          obj.connections = connections;
+        socket.on('socket:disconnect', function(id, count) {
+          model.count = count;
         });
       },
 
@@ -80,8 +81,8 @@ angular.module('magnetsApp')
        * @param modelName
        */
       unsyncUpdates: function (modelName) {
-        socket.removeAllListeners(modelName + ':connect');
-        socket.removeAllListeners(modelName + ':connections');
+        socket.removeAllListeners('socket:disconnect');
+        socket.removeAllListeners('socket:connect');
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
       }

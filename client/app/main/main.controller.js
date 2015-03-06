@@ -21,7 +21,7 @@
 
       var vm = this;
 
-      vm.socket = {}; 
+      vm.socket = {}; // info about the socket connection
       vm.magnets = []; // our data
       vm.selected = null;
 
@@ -45,24 +45,10 @@
 
         vm.magnets = magnets;
 
-        // vm.magnets.forEach(function(magnet) {
-        //   console.log(magnet);
-        // });
-
-        // Synchronise updates to the data
-        socket.syncConnect('magnet', vm.socket);
-        socket.syncConnections('magnet', vm.socket);
+        // Synchronise updates from socket
+        socket.syncSocket(vm.socket);
         socket.syncUpdates('magnet', vm.magnets);
       });
-
-      // Could handle connection here by binding directly to the socket
-      // property of the service, but I think I prefer the handling
-      // to be encapsulated within the service.
-      /*
-      socket.socket.on('magnet:connect', function(message){
-        console.log('hello', message);
-      });
-      */
 
       function update(magnet) {
         magnetService.updateMagnet(magnet);
@@ -77,7 +63,7 @@
       function setSelected(magnet) {
         
         // Check if this client has another selected magnet
-        var selected = _.findWhere(vm.magnets, { selected: vm.id });
+        var selected = _.findWhere(vm.magnets, { selected: vm.socket.id });
 
         // If he does, unselect and update
         if (selected && selected !== magnet) {
@@ -86,9 +72,9 @@
         }
 
         // Now select the new magnet and update
-        if (magnet.selected !== vm.id) {
+        if (magnet.selected !== vm.socket.id) {
           vm.selected = magnet;
-          magnet.selected = vm.id;
+          magnet.selected = vm.socket.id;
           update(magnet);
         }
       }
@@ -125,11 +111,11 @@
       // TODO: I think the fact that I'm passing the magnet in to all these
       //  functions might be an indication that I need to abstract some logic
       function isSelected(magnet) {
-        return magnet.selected === vm.id;
+        return magnet.selected === vm.socket.id;
       }
 
       function isDraggable(magnet) {
-        return !(magnet.selected && magnet.selected !== vm.id); 
+        return !(magnet.selected && magnet.selected !== vm.socket.id); 
       }
 
       function getClass(magnet) {
@@ -137,10 +123,10 @@
         if (!magnet.selected) {
           return;
         }
-        if (magnet.selected === vm.id) {
+        if (magnet.selected === vm.socket.id) {
           return 'selected'; 
         }
-        if (magnet.selected !== vm.id) {
+        if (magnet.selected !== vm.socket.id) {
           return 'inactive';
         }
       }

@@ -34,7 +34,7 @@ function onDisconnect(socket) {
 	    result.selected = null;
 	    result.save(function(err, magnet) {
 	    	if (err) return console.log(err);
-	    	console.log('Deselected magnet', magnet);
+	    	// console.log('Deselected magnet', magnet);
 	    });
 	  }
 	});
