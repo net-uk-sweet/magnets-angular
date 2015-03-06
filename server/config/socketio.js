@@ -7,19 +7,20 @@
 var config = require('./environment');
 var connections = 0;
 
-function onDisconnect(socket) {
+function onDisconnect(sockets, socket) {
+
   connections --;
-  console.log('%s has disconnected', socket.id);
-  socket.emit('magnet:disconnect', socket.id);
+  console.info('[%s] has disconnected, there are now %s users connected', socket.id, connections);
+  sockets.emit('magnet:connections', connections);
 }
 
 // When the user connects.. perform this
-function onConnect(socket) {
+function onConnect(sockets, socket) {
 
   connections ++;
-
+  console.info('[%s] is one of %s users to have connected', socket.id, connections);
   socket.emit('magnet:connect', socket.id);
-  console.log('%s has connected', socket.id);
+  sockets.emit('magnet:connections', connections);
 
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {
@@ -27,7 +28,6 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  //require('../api/thing/thing.socket').register(socket);
   require('../api/magnet/magnet.socket').register(socket);
 }
 
@@ -56,13 +56,10 @@ module.exports = function (socketio) {
 
     // Call onDisconnect.
     socket.on('disconnect', function () {
-      onDisconnect(socket);
-      console.info('[%s] DISCONNECTED!', socket.address);
+      onDisconnect(socketio.sockets, socket);
     });
 
     // Call onConnect.
-    onConnect(socket);
-    // TODO: why is this undefined?
-    console.info('[%s] CONNECTED!', socket.address);
+    onConnect(socketio.sockets, socket);
   });
 };

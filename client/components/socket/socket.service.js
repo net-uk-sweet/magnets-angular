@@ -18,13 +18,16 @@ angular.module('magnetsApp')
     return {
       socket: socket,
 
-      // TODO: do we want to do something on disconnect?
+      // TODO: communication between socket, service and controller feels pretty clumsy.
+      syncConnect: function(modelName, obj) {
+        socket.on(modelName + ':connect', function(id) {
+          obj.id = id;
+        });
+      },
 
-      syncConnect: function(modelName, cb) {
-
-        socket.on(modelName + ':connect', function(id, connections) {
-          console.log(id);
-          cb(id, connections);
+      syncConnections: function(modelName, obj) {
+        socket.on(modelName + ':connections', function(connections) {
+          obj.connections = connections;
         });
       },
 
@@ -77,8 +80,8 @@ angular.module('magnetsApp')
        * @param modelName
        */
       unsyncUpdates: function (modelName) {
-        // TODO: not sure if general 'connect' event should be namespaced to magnet model
         socket.removeAllListeners(modelName + ':connect');
+        socket.removeAllListeners(modelName + ':connections');
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
       }

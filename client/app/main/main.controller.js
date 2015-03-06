@@ -6,7 +6,8 @@
     [x] why is none of this checked in to git?
     [ ] update selected on server
     [x] integrate my directive
-    [ ]
+    [ ] figure out how to handle the number of connections
+    [ ] debug node??
 */
 
 (function() {
@@ -20,7 +21,7 @@
 
       var vm = this;
 
-      vm.id = ''; // socket id assigned to this client
+      vm.socket = {}; 
       vm.magnets = []; // our data
       vm.selected = null;
 
@@ -49,7 +50,8 @@
         // });
 
         // Synchronise updates to the data
-        socket.syncConnect('magnet', socketConnectHandler);
+        socket.syncConnect('magnet', vm.socket);
+        socket.syncConnections('magnet', vm.socket);
         socket.syncUpdates('magnet', vm.magnets);
       });
 
@@ -148,13 +150,6 @@
         // Unsubscribe from socket service on tear down
         socket.unsyncUpdates('magnet');
       });
-
-      // Handlers
-
-      function socketConnectHandler(id, connections) {
-        vm.id = id;
-        vm.connections = connections;
-      }
   }
 
 })();
