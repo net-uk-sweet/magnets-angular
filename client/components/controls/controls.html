@@ -12,8 +12,8 @@
   </ul>
   <div id="utilities" class="ui-panel">
     <!-- directive required on this one -->
-    <button ng-click="main.rotateSelected()">Rotate</button>
+    <button ng-click="main.rotateSelected()" sw-auto-fire min-speed="3" max-speed="10" steps="10">Rotate</button>
     <button ng-click="main.deleteSelected()">Delete</button>
   </div>
 </div>
-<span>{{main.connections}}</span>
+<span>Connections: {{main.connections}}</span>

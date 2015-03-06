@@ -1,7 +1,13 @@
-// TODO: can I include jshint in the test config?
-// TODO: check for modern way of doing drop shadow in CSS
-// TODO: why is none of this checked in to git?
-// TODO: update selected on server
+/* 
+  TODO: 
+    [ ] can I include jshint in the test config?
+    [ ] is it jslint I'm running?
+    [ ] check for modern way of doing drop shadow in CSS
+    [x] why is none of this checked in to git?
+    [ ] update selected on server
+    [x] integrate my directive
+    [ ]
+*/
 
 (function() {
 
