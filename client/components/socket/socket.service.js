@@ -56,7 +56,12 @@ angular.module('magnetsApp')
           // replace oldItem if it exists
           // otherwise just add item to the collection
           if (oldItem) {
-            array.splice(index, 1, item);
+            // array.splice(index, 1, item);
+            for (var prop in oldItem) {
+              if (oldItem.hasOwnProperty(prop)) {
+                oldItem[prop] = item[prop];
+              }
+            }
             event = 'updated';
           } else {
             array.push(item);

@@ -1,0 +1,87 @@
+.controls {
+  display: table;
+  margin: 0 auto;
+  width: 93%;
+  .logo, .toolbar, .connections {
+    display: table-cell;
+    // border: 1px dotted red;
+  }
+  .logo {
+    font-family: "Courier New", monospace;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+    width: 20%;
+    &:link, &:visited, &:hover, &:active {
+      color: $text-color;
+    }
+  }
+  .toolbar {
+    width: 60%;
+    // border: 1px solid red;
+    .menu, .palette, .utilities {
+      display: inline;
+    }
+    .menu {
+      float: left;
+      .plinth {
+        box-sizing: border-box;
+        display: inline-block;
+        width: 50px;
+        height: 25px;
+      }
+    }
+    .palette {
+      li { display: inline; }
+      button {
+        font-size: 0.75rem;
+      }
+    }
+    .utilities {
+      float: right;
+    }
+  }
+  .connections {
+    font-size: 0.9em;
+    text-align: right;
+    width: 20%;
+  }
+}
+
+button {
+  color: #272D31;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  vertical-align: top;
+  span {
+    font-size: 0;
+  }
+  &:before {
+    @include shadow;
+  }
+  &.red:after {
+    color: red;
+  }
+  &.yellow:after {
+    color: yellow;
+  }
+  &.green:after {
+    color: green;
+  }
+  &.blue:after {
+    color: blue;
+  }
+}
+
+.panel {
+  box-shadow: 0 0 1px 1px #000;
+  background-color: #56626B;
+  border-top: 2px solid #657078;
+  border-right: 2px solid #657078;
+  border-bottom: 2px solid #4E5961;
+  border-left: 2px solid #4E5961;
+  -webkit-box-shadow: 0 0 1px 1px #272D31;
+  -moz-box-shadow: 0 0 1px 1px #272D31;
+  box-shadow: 0 0 1px 1px #272D31;
+}

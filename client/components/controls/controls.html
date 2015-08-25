@@ -1,19 +1,22 @@
-<a href="http://ian.sweet.uk.net" id="logo" class="shadow">net.uk.sweet</a>
-<div id="toolbar">
-  <div id="menu" class="ui-panel">
-    <!-- directive required on next and previous -->
-    <button ng-click="">Previous letter</button>
-    <span id="character-selector" class="ui-button ui-state-default ui-corner-all"></span>
-    <!-- span id="character-selector"></span -->
-    <button ng-click="">Next letter</button>
-  </div>
-  <ul ng-enabled="!main.selected" class="ui-panel">
-    <li class="{{color}}" ng-repeat="color in controls.colors" ng-click="main.setSelectedColor(color)">{{color}}</li>
+<a href="http://ian.sweet.uk.net" class="logo shadow">net.uk.sweet</a>
+<div class="toolbar">
+  <div class="menu" sw-menu colors="main.colors" add-magnet="main.addMagnet"></div>
+  <ul ng-enabled="!main.selected" class="palette">
+    <li ng-class="{disabled: !main.selected || main.selected.color === color}" 
+      ng-repeat="color in main.colors" ng-click="main.setSelectedColor(color)">
+        <button class="{{color}} fa-circle fa panel">
+          <span>{{color}}</span>
+        </button>
+    </li>
   </ul>
-  <div id="utilities" class="ui-panel">
-    <!-- directive required on this one -->
-    <button ng-click="main.rotateSelected()" sw-auto-fire min-speed="3" max-speed="10" steps="10">Rotate</button>
-    <button ng-click="main.deleteSelected()">Delete</button>
+  <div class="utilities">
+    <button ng-click="main.rotateSelected()" class="fa-rotate-right fa panel" 
+      sw-auto-fire min-speed="3" max-speed="10" steps="10">
+        <span>Rotate</span>
+    </button>
+    <button ng-click="main.deleteSelected()" class="fa-trash fa panel">
+      <span>Delete</span>
+    </button>
   </div>
 </div>
-<span>Connections: {{main.socket.count}}</span>
+<span class="shadow fa-users fa connections">({{main.socket.count}})</span>

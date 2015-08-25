@@ -1,11 +1,17 @@
 
+$text-color: #272D31;
 $fa-font-path: "/bower_components/font-awesome/fonts";
 
-@import 'font-awesome/scss/font-awesome';
+@import "font-awesome/scss/font-awesome";
 
 /**
  * App-wide Styles
  */
+
+html {
+	color: $text-color;
+	font-size: 100%;
+}
 
 .browsehappy {
     margin: 0.2em 0;
@@ -25,4 +31,6 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 // injector
 @import 'admin/admin.scss';
 @import 'main/main.scss';
+@import 'menu/menu.scss';
+@import 'controls/controls.scss';
 // endinjector

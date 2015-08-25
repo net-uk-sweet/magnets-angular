@@ -1,4 +1,4 @@
-<div class="container">
+<!-- div class="container"> -->
   <div class="wrapper">
     <div class="frame">
       <ul class="board" data-drop="true" data-jqyoui-options jqyoui-droppable="true">
@@ -9,12 +9,12 @@
             ng-click="main.setSelected(magnet)"
             ng-model="main.magnets"
             data-drag="{{main.isDraggable(magnet)}}"
-            data-jqyoui-options="{revert: 'invalid', containment: 'parent'}"
+            data-jqyoui-options="{containment: 'parent'}"
             jqyoui-draggable="{index: {{$index}}, animate:true, onStop: 'main.setPosition(magnet, $index)'}">
               {{magnet.character}}
         </li>
       </ul>
-      <div id="controls" ng-controller="ControlsCtrl as controls" ng-include="'components/controls/controls.html'"></div>
+      <div class="controls" ng-include="'components/controls/controls.html'"></div>
     </div>
   </div>
-</div>
+<!-- </div> -->

@@ -7,6 +7,18 @@
 .yellow { color: #ffff00; }
 .blue { color: #0000ff; }
 
+@mixin shadow {
+  text-shadow: 1px 1px 0 #939BA1;  
+}
+
+.shadow {
+  @include shadow;
+}
+
+.disabled {
+  opacity: 0.3;
+}
+
 .magnet {
   display: inline-block;
   position: absolute;
@@ -80,13 +92,6 @@
       background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 56%,rgba(229,229,229,1) 99%); /* IE10+ */
       background: radial-gradient(center, ellipse cover, rgba(255,255,255,1) 56%,rgba(229,229,229,1) 99%); /* W3C */
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
-
-      li {
-        font-size: 20px;
-        position: absolute;
-        display: inline;
-        list-style: none;
-      }
     }
   }
 }

@@ -3,10 +3,7 @@
     [ ] can I include jshint in the test config?
     [ ] is it jslint I'm running?
     [ ] check for modern way of doing drop shadow in CSS
-    [x] why is none of this checked in to git?
     [ ] update selected on server
-    [x] integrate my directive
-    [ ] figure out how to handle the number of connections
     [ ] debug node??
 */
 
@@ -21,6 +18,7 @@
 
       var vm = this;
 
+      vm.colors = ['red', 'yellow', 'green', 'blue'];  
       vm.socket = {}; // info about the socket connection
       vm.magnets = []; // our data
       vm.selected = null;
@@ -37,6 +35,7 @@
       vm.setSelectedColor = setSelectedColor;
       vm.rotateSelected = rotateSelected;
       vm.deleteSelected = deleteSelected;
+      vm.addMagnet = addMagnet;
 
       // Grab the initial data
       magnetService.getMagnets().success(function(magnets) {
@@ -106,6 +105,12 @@
         if (selected) {
           magnetService.deleteMagnet(vm.selected);
         }
+      }
+
+      function addMagnet(magnet) {
+        magnet.selected = vm.socket.id;
+        magnetService.addMagnet(magnet);
+        // console.log('adding magnet', magnet);
       }
 
       // TODO: I think the fact that I'm passing the magnet in to all these
