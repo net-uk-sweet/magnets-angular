@@ -1,6 +1,6 @@
 <a href="http://ian.sweet.uk.net" class="logo shadow">net.uk.sweet</a>
 <div class="toolbar">
-  <div class="menu" sw-menu colors="main.colors" add-magnet="main.addMagnet"></div>
+  <div class="menu" sw-menu colors="main.colors"></div>
   <ul ng-enabled="!main.selected" class="palette">
     <li ng-class="{disabled: !main.selected || main.selected.color === color}" 
       ng-repeat="color in main.colors" ng-click="main.setSelectedColor(color)">

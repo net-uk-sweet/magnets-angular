@@ -7,6 +7,7 @@
           return {
             templateUrl: 'app/menu/menu.html',
             restrict: 'EA',
+            require: '^swBoard',
             scope: {
                   addMagnet: '&',
             	colors: '=' // @ for strings, = for 2-way binding, & for function
@@ -39,18 +40,14 @@
             	};
             	$scope.stop = function(event, ui, magnet) {
 
-                        // TODO: don't like coming back out of the scope of the directive to get a position
-                        var offset = $('.board').offset();
-
-                        var magnet = {
+                        $scope.boardController.addMagnet({
                               character: letter,
                               color: color,
-                              x: ui.offset.left - offset.left,
-                              y: ui.offset.top - offset.top,
+                              x: ui.offset.left,
+                              y: ui.offset.top,
                               rotation: 0,
                               selected: false
-                        } 
-                        $scope.addMagnet()(magnet);
+                        });
             	};
             	$scope.drag = function(magnet) {
             		// console.log('controller drag', magnet);
@@ -64,7 +61,9 @@
 
             	createLetter();
             },
-            link: function (scope, element, attrs) {
+            link: function (scope, element, attrs, controller) {
+
+                  scope.boardController = controller;
 
                   // Watch for the letter property on the above controller to change
             	scope.$watch('magnet.letter', function() {
