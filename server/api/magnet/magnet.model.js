@@ -9,6 +9,7 @@ var MagnetSchema = new Schema({
   x: Number,
   y: Number,
   rotation: Number,
+  newSelected: Boolean,
   selected:String // Might want this to be an id to identify who has it selected
 });
 

@@ -7,6 +7,30 @@
 var magnet = require('./magnet.model.js');
 
 exports.register = function(socket) {
+
+  // TODO: there's some duplication in the deselectMagnet function below
+  // TODO: plus this is a pyramid of dooooom
+  magnet.schema.pre('save', function(next) {
+    var self = this;
+    if (this.newSelected) {
+      this.newSelected = false;
+      magnet.findOne({ selected: this.selected }, function(err, result) {
+        console.log('find one', self.selected);
+        if (result) {
+          console.log('found one', result.id);
+          result.selected = null;
+          result.save(function(err, result) {
+            if (err) { console.log('Error', err); }
+            next();
+          })
+        }
+        next();
+      });
+    } else {
+      next();
+    }
+  });
+
   magnet.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
@@ -14,7 +38,7 @@ exports.register = function(socket) {
     onRemove(socket, doc);
   });
   socket.on('disconnect', function() {
-  	onDisconnect(socket);
+  	deselectMagnet(socket);
   });
 }
 
@@ -26,10 +50,10 @@ function onRemove(socket, doc, cb) {
   socket.emit('magnet:remove', doc);
 }
 
-function onDisconnect(socket) {
+function deselectMagnet(socket) {
 	// There should only be one or zero magnets selected by this user
 	magnet.findOne({ selected: socket.id }, function(err, result) {
-	  if (err) return console.log(err);
+	  // if (err) return console.log(err);
 	  if (result) {
 	    result.selected = null;
 	    result.save(function(err, magnet) {

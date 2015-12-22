@@ -2,7 +2,7 @@
 <div class="toolbar">
   <div class="menu" sw-menu colors="main.colors"></div>
   <ul ng-enabled="!main.selected" class="palette">
-    <li ng-class="{disabled: !main.selected || main.selected.color === color}" 
+    <li ng-class="{disabled: !main.getSelected() || main.getSelected().color === color}" 
       ng-repeat="color in main.colors" ng-click="main.setSelectedColor(color)">
         <button class="{{color}} fa-circle fa panel">
           <span>{{color}}</span>

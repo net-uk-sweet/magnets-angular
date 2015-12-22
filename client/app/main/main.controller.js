@@ -21,11 +21,11 @@
       vm.colors = ['red', 'yellow', 'green', 'blue'];  
       vm.socket = {}; // info about the socket connection
       vm.magnets = []; // our data
-      vm.selected = null;
 
       // Controller API
       vm.setPosition = setPosition;
       vm.setSelected = setSelected;
+      vm.getSelected = getSelected;
       vm.isSelected = isSelected;
       vm.isDraggable = isDraggable;
       vm.getClass = getClass;
@@ -60,57 +60,50 @@
       }
 
       function setSelected(magnet) {
-        
-        // Check if this client has another selected magnet
-        var selected = _.findWhere(vm.magnets, { selected: vm.socket.id });
-
-        // If he does, unselect and update
-        if (selected && selected !== magnet) {
-          selected.selected = null;
-          update(selected);
-        }
-
-        // Now select the new magnet and update
-        if (magnet.selected !== vm.socket.id) {
-          vm.selected = magnet;
+        if (!magnet.selected) {
+          magnet.newSelected = true;
           magnet.selected = vm.socket.id;
           update(magnet);
         }
       }
 
+      function getSelected() {
+        return _.findWhere(vm.magnets, { selected: vm.socket.id });
+      }
+
       function setSelectedColor(color) {
 
-        var selected = vm.selected;
+        var selected = getSelected();
 
         if (selected) {
           selected.color = color;
-          update(vm.selected);
+          update(selected);
         }
       }
 
       function rotateSelected() {
         
-        var selected = vm.selected;
+        var selected = getSelected();
 
         if (selected) {
           selected.rotation = (selected.rotation + 15) % 360;
-          update(vm.selected);
+          update(selected);
         }
       }
 
       function deleteSelected() {
 
-        var selected = vm.selected;
+        var selected = getSelected();
 
         if (selected) {
-          magnetService.deleteMagnet(vm.selected);
+          magnetService.deleteMagnet(selected);
         }
       }
 
       function addMagnet(magnet) {
+        magnet.newSelected = true;
         magnet.selected = vm.socket.id;
         magnetService.addMagnet(magnet);
-        // console.log('adding magnet', magnet);
       }
 
       // TODO: I think the fact that I'm passing the magnet in to all these
