@@ -1,7 +1,7 @@
 <a href="http://ian.sweet.uk.net" class="logo shadow">net.uk.sweet</a>
 <div class="toolbar">
   <div class="menu" sw-menu colors="main.colors"></div>
-  <ul ng-enabled="!main.selected" class="palette">
+  <ul ng-enabled="!main.getSelected()" class="palette">
     <li ng-class="{disabled: !main.getSelected() || main.getSelected().color === color}" 
       ng-repeat="color in main.colors" ng-click="main.setSelectedColor(color)">
         <button class="{{color}} fa-circle fa panel">
@@ -9,13 +9,14 @@
         </button>
     </li>
   </ul>
-  <div class="utilities">
-    <button ng-click="main.rotateSelected()" class="fa-rotate-right fa panel" 
-      sw-auto-fire min-speed="3" max-speed="10" steps="10">
+  <div ng-enabled="!main.getSelected()" class="utilities">
+    <button ng-class="{disabled: !main.getSelected()}" class="fa-rotate-right fa panel"  
+      sw-auto-fire min-speed="3" max-speed="10" steps="10" callback="main.rotateSelected">
         <span>Rotate</span>
     </button>
-    <button ng-click="main.deleteSelected()" class="fa-trash fa panel">
-      <span>Delete</span>
+    <button ng-click="main.deleteSelected()" ng-class="{disabled: !main.getSelected()}" 
+      class="fa-trash fa panel">
+        <span>Delete</span>
     </button>
   </div>
 </div>

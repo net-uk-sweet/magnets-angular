@@ -9,13 +9,14 @@
 
 		return {
 			restrict: 'A',
-			scope: {},
+			scope: {
+				callback: '&callback'
+			},
 
 			link: function(scope, elem, attr) {
 
 				// Grab attributes 
-				var event = attr.event || 'click',
-					minSpeed = scope.$eval(attr.minSpeed) || 1,
+				var minSpeed = scope.$eval(attr.minSpeed) || 1,
 					maxSpeed = scope.$eval(attr.maxSpeed) || 10,
 					steps = scope.$eval(attr.steps) || 10;
 
@@ -29,7 +30,7 @@
 
 					timeout = $timeout(function() {
 						
-						elem.triggerHandler(event);
+						scope.callback()();
 
 						step = (step === steps) ? steps : step + 1;
 					

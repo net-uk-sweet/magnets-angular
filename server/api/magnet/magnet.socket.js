@@ -10,6 +10,7 @@ exports.register = function(socket) {
 
   // TODO: there's some duplication in the deselectMagnet function below
   // TODO: plus this is a pyramid of dooooom
+  // TODO: socket.id in disconnect, but using this.selected here, why?
   magnet.schema.pre('save', function(next) {
     var self = this;
     if (this.newSelected) {
