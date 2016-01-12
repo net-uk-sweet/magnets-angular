@@ -20,6 +20,8 @@
 }
 
 .magnet {
+  border-radius: 25%;
+  border: 1px dashed transparent; // Stops magnets jumping about when selected
   display: inline-block;
   position: absolute;
   box-sizing: border-box;
@@ -31,8 +33,6 @@
   cursor: move;
   margin: 0;
   padding: 0;
-  /*border: 1px solid red;*/
-  /*width: 32px;*/
   height: 32px;
   line-height: 28px;
   text-align: center;
@@ -95,6 +95,16 @@
   background: radial-gradient(center, ellipse cover, rgba(255,255,255,1) 56%,rgba(229,229,229,1) 99%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
 }
+
+.magnet-a { line-height: 1.1; }
+.magnet-b { line-height: 1.3; }
+.magnet-c { line-height: 1.1; }
+.magnet-d { line-height: 1.3; }
+.magnet-e { line-height: 1.1; }
+.magnet-f { line-height: 1.3; }
+.magnet-g { line-height: 1.3; }
+.magnet-h { line-height: 1.3; }
+.magnet-n { line-height: 1.1; }
 
 .magnets {
   height: 100%;

@@ -14,6 +14,10 @@
             },
             controller: function($scope) {
             	
+                  // If you don't understand it when you come back to it, it's probably
+                  // to trickster. Plus this method appears to generate unnecessary
+                  // characters which need to be removed in the createLetter method 
+                  // below. Perhaps a candidate for a refactor!
             	$scope.letters = _.map(_.range(
             		'a'.charCodeAt(0), 
             		'z'.charCodeAt(0) + 1), String.fromCharCode);
@@ -54,8 +58,7 @@
             	};
 
             	function createLetter() { 
-            		// console.log($scope.letters[$scope.index]);
-            		letter = $scope.magnet.letter = $scope.letters[$scope.index];
+            		letter = $scope.magnet.letter = $scope.letters[$scope.index].substr(0, 1);
             		color = $scope.magnet.color = $scope.colors[Math.round(Math.random() * ($scope.colors.length - 1))];
             	}
 
@@ -75,6 +78,7 @@
             			'</span>'
             		)
             		.addClass(scope.magnet.color + ' magnet')
+                        .addClass('magnet-' + scope.magnet.letter)
             		.attr('data-drag', 'true')
             		.attr('ng-model', 'magnet')
             		.attr('jqyoui-options', "{revert: true, revertDuration: 0}")

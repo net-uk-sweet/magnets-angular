@@ -4,7 +4,7 @@
 		<div class="board" data-drop="true" data-jqyoui-droppable="true" data-board>
 			<ul class="magnets">	
 				<li ng-repeat="magnet in main.magnets"
-				    class="magnet {{magnet.color}}"
+				    class="magnet {{magnet.color}} magnet-{{magnet.character}}"
 				    ng-class="main.getClass(magnet)"
 				    style="top: {{magnet.y}}px; left: {{magnet.x}}px; transform: rotate({{magnet.rotation}}deg)"
 				    ng-click="main.setSelected(magnet)"
