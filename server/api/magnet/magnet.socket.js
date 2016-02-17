@@ -11,14 +11,15 @@ exports.register = function(socket) {
   // TODO: there's some duplication in the deselectMagnet function below
   // TODO: plus this is a pyramid of dooooom
   // TODO: socket.id in disconnect, but using this.selected here, why?
+  // - value of socket.id is different between pre save hook and deselectMagnet
+  // - probably tidy this up with some nice promises
+  // - this is a mess, but it works, and frankly I've had enough of this project.
   magnet.schema.pre('save', function(next) {
     var self = this;
     if (this.newSelected) {
       this.newSelected = false;
       magnet.findOne({ selected: this.selected }, function(err, result) {
-        console.log('find one', self.selected);
         if (result) {
-          console.log('found one', result.id);
           result.selected = null;
           result.save(function(err, result) {
             if (err) { console.log('Error', err); }
@@ -52,6 +53,7 @@ function onRemove(socket, doc, cb) {
 }
 
 function deselectMagnet(socket) {
+  console.log('disconnecting socket id', socket.id);
 	// There should only be one or zero magnets selected by this user
 	magnet.findOne({ selected: socket.id }, function(err, result) {
 	  // if (err) return console.log(err);
