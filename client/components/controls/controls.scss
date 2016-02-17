@@ -27,6 +27,7 @@
       .plinth {
         box-sizing: border-box;
         display: inline-block;
+        position: relative;
         width: 50px;
         height: 25px;
       }
@@ -51,6 +52,7 @@
 button {
   color: #272D31;
   cursor: pointer;
+  position: relative;
   width: 25px;
   height: 25px;
   vertical-align: top;
@@ -59,6 +61,17 @@ button {
   }
   &:before {
     @include shadow;
+    position: absolute;
+    top: 3px;
+    left: 4px;
+  }
+  &.color:before {
+    top: 4px;
+    left: 5px;
+  }
+  &.page:before {
+    top: 3px;
+    left: 7px;
   }
   &.red:after {
     color: red;

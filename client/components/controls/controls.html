@@ -4,7 +4,7 @@
   <ul ng-enabled="!main.getSelected()" class="palette">
     <li ng-class="{disabled: !main.getSelected() || main.getSelected().color === color}" 
       ng-repeat="color in main.colors" ng-click="main.setSelectedColor(color)">
-        <button class="{{color}} fa-circle fa panel">
+        <button class="{{color}} color fa-circle fa panel">
           <span>{{color}}</span>
         </button>
     </li>
