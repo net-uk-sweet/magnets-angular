@@ -1,23 +1,26 @@
 .controls {
   display: table;
-  margin: 0 auto;
+  margin: 5px auto 0;
   width: 93%;
-  .logo, .toolbar, .connections {
+  .logo-holder, .toolbar, .connections-holder {
     display: table-cell;
-    // border: 1px dotted red;
+    vertical-align: middle;
+    width: 25%;
+  }
+  .connections-holder {
+    text-align: right;
   }
   .logo {
     font-family: "Courier New", monospace;
     font-size: 1.2em;
     font-weight: bold;
     text-decoration: none;
-    width: 20%;
     &:link, &:visited, &:hover, &:active {
       color: $text-color;
     }
   }
   .toolbar {
-    width: 60%;
+    width: 50%;
     // border: 1px solid red;
     .menu, .palette, .utilities {
       display: inline;
