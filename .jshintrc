@@ -1,0 +1,61 @@
+
+{
+    /*
+    * ENVIRONMENTS
+    * =================
+    */
+
+    // Define globals exposed by modern browsers.
+    "browser": true,
+
+    // Define globals exposed by jQuery.
+    "jquery": false,
+
+    // Define globals exposed by Node.js.
+    "node": true,
+
+    // Define globals exposed by Browserify.
+    "browserify": true,
+
+    /*
+    * ENFORCING OPTIONS
+    * =================
+    */
+
+    // Forces require of ECMAScript 5's strict mode.
+    "strict": true,
+    // Force all variable names to use either camelCase style or UPPER_CASE
+    // with underscores.
+    "camelcase": false,
+    // Prohibit use of == and != in favor of === and !==.
+    "eqeqeq": true,
+    // Prohibit use of a variable before it is defined.
+    "latedef": false,
+    // Require capitalized names for constructor functions.
+    "newcap": true,
+    // Enforce placing 'use strict' at the top function scope
+    "strict": true,
+    // Prohibit use of explicitly undeclared variables.
+    "undef": false,
+    // Warn when variables are defined but never used.
+    "unused": true,
+    // Supressess debugger warnings.
+    "debug": true,
+
+    "globals": {
+        "Promise": true,
+        "fetch": true,
+        "picturefill": true,
+        "Modernizr": true,
+        // Allows use of the ECMAScript 6 module.
+        "module": true
+    },
+
+    /*
+    * RELAXING OPTIONS
+    * =================
+    */
+
+    // Suppress warnings about == null comparisons.
+    "eqnull": true
+}
