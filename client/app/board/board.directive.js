@@ -10,9 +10,10 @@ angular.module('magnetsApp')
       },
       controller: function($scope, $element) {
 
-        var offset = $element.find('[data-board]').offset();
+        this.addMagnet = function(magnet) {
+          
+          var offset = $element.find('[data-board]').offset();
 
-      	this.addMagnet = function(magnet) {
           // console.log('Magnet added', magnet, offset);
           magnet.x = magnet.x - offset.left;
           magnet.y = magnet.y - offset.top;

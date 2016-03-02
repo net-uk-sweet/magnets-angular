@@ -2,7 +2,6 @@
 
   // TODO: duplication in and better understanding of prehook in server/api/magnet/magnet.socket.js
   // TODO: preloader directive
-  // TODO: tidy UI
 
   'use strict';
 
