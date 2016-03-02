@@ -39,10 +39,7 @@
             		createLetter();
             	};
 
-            	$scope.start = function(magnet) {
-            		// console.log('controller start', magnet);
-            	};
-            	$scope.stop = function(event, ui, magnet) {
+            	$scope.stop = function(event, ui) {
 
                         $scope.boardController.addMagnet({
                               character: letter,
@@ -52,9 +49,7 @@
                               rotation: 0,
                               selected: false
                         });
-            	};
-            	$scope.drag = function(magnet) {
-            		// console.log('controller drag', magnet);
+                        createLetter();
             	};
 
             	function createLetter() { 
@@ -69,7 +64,7 @@
                   scope.boardController = controller;
 
                   // Watch for the letter property on the above controller to change
-            	scope.$watch('magnet.letter', function() {
+            	scope.$watch('magnet', function() {
 
                         // And create the appropriate letter element
             		var letter = angular.element(
@@ -81,12 +76,15 @@
                         .addClass('magnet-' + scope.magnet.letter)
             		.attr('data-drag', 'true')
             		.attr('ng-model', 'magnet')
-            		.attr('jqyoui-options', "{revert: true, revertDuration: 0}")
-                        .attr('jqyoui-draggable', '{ onStop: "stop(magnet)", onStart: "start(magnet)", onDrag: "drag(magnet)" }');
+            		.attr('jqyoui-options', '{revert: true, revertDuration: 0}')
+                        .attr('jqyoui-draggable', '{ onStop: "stop(magnet)" }');
 
-            		element.find('.plinth').html(letter);
+            		element.find('.plinth')
+                              .empty()
+                              .html(letter);
+
             		$compile(letter)(scope);
-            	});
+            	}, true);
             }
           };
       });
