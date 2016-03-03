@@ -25,8 +25,8 @@ describe('Controller: MainCtrl', function () {
   var response = [
     {
       id: 0,
-      character: "i",
-      color: "#ff0000",
+      character: 'i',
+      color: '#ff0000',
       x: 0,
       y: 0,
       rotation: 360,
@@ -34,8 +34,8 @@ describe('Controller: MainCtrl', function () {
     },
     {
       id: 1,
-      character: "a",
-      color: "#00ff00",
+      character: 'a',
+      color: '#00ff00',
       x: 10,
       y: 0,
       rotation: 180,
@@ -43,8 +43,8 @@ describe('Controller: MainCtrl', function () {
     },
     {
       id: 2,
-      character: "n",
-      color: "#0000ff",
+      character: 'n',
+      color: '#0000ff',
       x: 20,
       y: 0,
       rotation: 270,
@@ -86,11 +86,13 @@ describe('Controller: MainCtrl', function () {
   });
 
   // General approach to testing a $watch
+  /*
   xit('should change the value of x when y changes', function() {
     scope.x = 'changed the x value'; // Change watched value
     scope.$apply(); // apply the change so the watch fires
     expect(scope.y).toBe('changed the x value'); // Check the value of other variables
   });
+*/
 
   describe('when calling the addMagnet function', function() {
     beforeEach(function() {
@@ -100,9 +102,9 @@ describe('Controller: MainCtrl', function () {
     });
 
     // it should call http service
-    xit('should call $http post', function() {
-      expect($http.post).toHaveBeenCalled();
-    });
+    // xit('should call $http post', function() {
+    //   expect($http.post).toHaveBeenCalled();
+    // });
 
     it('should return if magnet is empty', function() {
       expect(scope.magnet).toEqual({});
