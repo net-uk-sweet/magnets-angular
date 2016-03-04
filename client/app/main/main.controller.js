@@ -31,12 +31,12 @@
         // Grab the initial data
         magnetService.getMagnets().success(function (magnets) {
 
-        $log.info('Got initial data');
+            $log.info('Got initial data');
 
-        vm.magnets = magnets;
+            vm.magnets = magnets;
 
-        // Synchronise updates from socket
-        socket.syncSocket(vm.socket);
+            // Synchronise updates from socket
+            socket.syncSocket(vm.socket);
             socket.syncUpdates('magnet', vm.magnets);
         });
 
