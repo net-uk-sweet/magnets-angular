@@ -1,25 +1,30 @@
-'use strict';
+(function() {
 
-angular.module('magnetsApp')
-  .directive('swBoard', function () {
-    return {
-      //templateUrl: 'app/board/board.html',
-      restrict: 'EA',
-      scope: {
-        addMagnet: '='
-      },
-      controller: function($scope, $element) {
+    'use strict';
 
-        this.addMagnet = function(magnet) {
-          
-          var offset = $element.find('[data-board]').offset();
+    angular.module('magnetsApp')
+        .directive('swBoard', swBoard);
 
-          // console.log('Magnet added', magnet, offset);
-          magnet.x = magnet.x - offset.left;
-          magnet.y = magnet.y - offset.top;
+    function swBoard() {
 
-          $scope.addMagnet(magnet);
+        return {
+            restrict: 'EA',
+            scope: {
+                addMagnet: '='
+            },
+            controller: function($scope, $element) {
+
+                this.addMagnet = function(magnet) {
+
+                    var offset = $element.find('[data-board]').offset();
+
+                    // console.log('Magnet added', magnet, offset);
+                    magnet.x = magnet.x - offset.left;
+                    magnet.y = magnet.y - offset.top;
+
+                    $scope.addMagnet(magnet);
+                };
+            }
         };
-      }
-    };
-  });
+    }
+})();

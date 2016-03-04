@@ -1,12 +1,12 @@
 (function() {
 
-  'use strict';
+    'use strict';
 
-  angular.module('magnetsApp')
-    .controller('AdminController', AdminController);
+    angular.module('magnetsApp')
+        .controller('AdminController', AdminController);
 
     function AdminController($scope) {
-      $scope.message = 'Hello';
+        $scope.message = 'Hello';
     }
 
 })();

@@ -1,65 +1,65 @@
 (function() {
 
-	'use strict';
+    'use strict';
 
-	angular.module('magnetsApp')
-		.directive('swAutoFire', swAutoFire);
+    angular.module('magnetsApp')
+        .directive('swAutoFire', swAutoFire);
 
-	function swAutoFire($timeout) {
+    function swAutoFire($timeout) {
 
-		return {
-			restrict: 'A',
-			scope: {
-				callback: '&callback'
-			},
+        return {
+            restrict: 'A',
+            scope: {
+                callback: '&callback'
+            },
 
-			link: function(scope, elem, attr) {
+            link: function(scope, elem, attr) {
 
-				// Grab attributes 
-				var minSpeed = scope.$eval(attr.minSpeed) || 1,
-					maxSpeed = scope.$eval(attr.maxSpeed) || 10,
-					steps = scope.$eval(attr.steps) || 10;
+                // Grab attributes 
+                var minSpeed = scope.$eval(attr.minSpeed) || 1,
+                    maxSpeed = scope.$eval(attr.maxSpeed) || 10,
+                    steps = scope.$eval(attr.steps) || 10;
 
-				// State
-				var frameDuration,
-					timeout,
-					step = 0, 
-					dspeed = maxSpeed - minSpeed;
-					
-				function startTimer() {
+                // State
+                var frameDuration,
+                    timeout,
+                    step = 0, 
+                    dspeed = maxSpeed - minSpeed;
+                    
+                function startTimer() {
 
-					timeout = $timeout(function() {
-						
-						scope.callback()();
+                    timeout = $timeout(function() {
+                        
+                        scope.callback()();
 
-						step = (step === steps) ? steps : step + 1;
-					
-						frameDuration = 1000 / (maxSpeed - 
-							(Math.cos((step / steps) * 
-							(Math.PI / 2)) * dspeed));
+                        step = (step === steps) ? steps : step + 1;
+                    
+                        frameDuration = 1000 / (maxSpeed - 
+                            (Math.cos((step / steps) * 
+                            (Math.PI / 2)) * dspeed));
 
-						startTimer();
+                        startTimer();
 
-					}, step ? frameDuration : 0);
-				}
+                    }, step ? frameDuration : 0);
+                }
 
-				function stopTimer() {
-					step = 0;
-					$timeout.cancel(timeout);
-				}
+                function stopTimer() {
+                    step = 0;
+                    $timeout.cancel(timeout);
+                }
 
-				function mouseDownHandler() {
-					startTimer();
-				}
+                function mouseDownHandler() {
+                    startTimer();
+                }
 
-				function mouseUpHandler() {
-					stopTimer();
-				}
+                function mouseUpHandler() {
+                    stopTimer();
+                }
 
-				elem.on('mousedown', mouseDownHandler);
-				elem.on('mouseup mouseout', mouseUpHandler);
-			}
-		};		
-	}
+                elem.on('mousedown', mouseDownHandler);
+                elem.on('mouseup mouseout', mouseUpHandler);
+            }
+        };      
+    }
 
 })();

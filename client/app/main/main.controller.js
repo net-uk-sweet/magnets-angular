@@ -1,44 +1,35 @@
-/* 
-  TODO: 
-    [ ] can I include jshint in the test config?
-    [ ] is it jslint I'm running?
-    [ ] check for modern way of doing drop shadow in CSS
-    [ ] update selected on server
-    [ ] debug node??
-*/
-
 (function() {
 
-  'use strict';
+    'use strict';
 
-  angular.module('magnetsApp')
-    .controller('MainController', MainController);
+    angular.module('magnetsApp')
+        .controller('MainController', MainController);
 
-  function MainController($scope, $log, magnetService, socket) {
+    function MainController($scope, $log, magnetService, socket) {
 
-      var vm = this;
+        var vm = this;
 
-      vm.colors = ['red', 'yellow', 'green', 'blue'];  
-      vm.socket = {}; // info about the socket connection
-      vm.magnets = []; // our data
+        vm.colors = ['red', 'yellow', 'green', 'blue'];  
+        vm.socket = {}; // info about the socket connection
+        vm.magnets = []; // our data
 
-      // Controller API
-      vm.setPosition = setPosition;
-      vm.setSelected = setSelected;
-      vm.getSelected = getSelected;
-      vm.isSelected = isSelected;
-      vm.isDraggable = isDraggable;
-      vm.getClass = getClass;
-      vm.isDraggable = isDraggable;
+        // Controller API
+        vm.setPosition = setPosition;
+        vm.setSelected = setSelected;
+        vm.getSelected = getSelected;
+        vm.isSelected = isSelected;
+        vm.isDraggable = isDraggable;
+        vm.getClass = getClass;
+        vm.isDraggable = isDraggable;
 
-      // TODO: candidates for abstraction to a controls Controller
-      vm.setSelectedColor = setSelectedColor;
-      vm.rotateSelected = rotateSelected;
-      vm.deleteSelected = deleteSelected;
-      vm.addMagnet = addMagnet;
+        // TODO: candidates for abstraction to a controls Controller
+        vm.setSelectedColor = setSelectedColor;
+        vm.rotateSelected = rotateSelected;
+        vm.deleteSelected = deleteSelected;
+        vm.addMagnet = addMagnet;
 
-      // Grab the initial data
-      magnetService.getMagnets().success(function(magnets) {
+        // Grab the initial data
+        magnetService.getMagnets().success(function(magnets) {
 
         $log.info('Got initial data');
 
@@ -46,94 +37,94 @@
 
         // Synchronise updates from socket
         socket.syncSocket(vm.socket);
-        socket.syncUpdates('magnet', vm.magnets);
-      });
+            socket.syncUpdates('magnet', vm.magnets);
+        });
 
-      function update(magnet) {
-        magnetService.updateMagnet(magnet);
-      }
+        function update(magnet) {
+            magnetService.updateMagnet(magnet);
+        }
 
-      function setPosition(event, ui, magnet) {
+        function setPosition(event, ui, magnet) {
         magnet.x = ui.position.left;
-        magnet.y = ui.position.top;
-        update(magnet);
-      }
-
-      function setSelected(magnet) {
-        if (!magnet.selected) {
-          magnet.newSelected = true;
-          magnet.selected = vm.socket.id;
-          update(magnet);
+            magnet.y = ui.position.top;
+            update(magnet);
         }
-      }
 
-      function getSelected() {
-        return _.findWhere(vm.magnets, { selected: vm.socket.id });
-      }
-
-      function setSelectedColor(color) {
-
-        var selected = getSelected();
-
-        if (selected) {
-          selected.color = color;
-          update(selected);
+        function setSelected(magnet) {
+            if (!magnet.selected) {
+                magnet.newSelected = true;
+                magnet.selected = vm.socket.id;
+                update(magnet);
+            }
         }
-      }
 
-      function rotateSelected() {
-        
-        var selected = getSelected();
-
-        if (selected) {
-          selected.rotation = (selected.rotation + 15) % 360;
-          update(selected);
+        function getSelected() {
+            return _.findWhere(vm.magnets, { selected: vm.socket.id });
         }
-      }
 
-      function deleteSelected() {
+        function setSelectedColor(color) {
 
-        var selected = getSelected();
+            var selected = getSelected();
 
-        if (selected) {
-          magnetService.deleteMagnet(selected);
+            if (selected) {
+                selected.color = color;
+                update(selected);
+            }
         }
-      }
 
-      function addMagnet(magnet) {
-        magnet.newSelected = true;
-        magnet.selected = vm.socket.id;
-        magnetService.addMagnet(magnet);
-      }
+        function rotateSelected() {
 
-      // TODO: I think the fact that I'm passing the magnet in to all these
-      //  functions might be an indication that I need to abstract some logic
-      function isSelected(magnet) {
-        return magnet.selected === vm.socket.id;
-      }
+            var selected = getSelected();
 
-      function isDraggable(magnet) {
-        return !(magnet.selected && magnet.selected !== vm.socket.id); 
-      }
-
-      function getClass(magnet) {
-
-        if (!magnet.selected) {
-          return;
+            if (selected) {
+                selected.rotation = (selected.rotation + 15) % 360;
+                update(selected);
+            }
         }
-        if (magnet.selected === vm.socket.id) {
-          return 'selected'; 
-        }
-        if (magnet.selected !== vm.socket.id) {
-          return 'inactive';
-        }
-      }
 
-      // Listeners
-      $scope.$on('$destroy', function () {
-        // Unsubscribe from socket service on tear down
-        socket.unsyncUpdates('magnet');
-      });
-  }
+        function deleteSelected() {
+
+            var selected = getSelected();
+
+            if (selected) {
+                magnetService.deleteMagnet(selected);
+            }
+        }
+
+        function addMagnet(magnet) {
+            magnet.newSelected = true;
+            magnet.selected = vm.socket.id;
+            magnetService.addMagnet(magnet);
+        }
+
+        // TODO: I think the fact that I'm passing the magnet in to all these
+        //  functions might be an indication that I need to abstract some logic
+        function isSelected(magnet) {
+            return magnet.selected === vm.socket.id;
+        }
+
+        function isDraggable(magnet) {
+            return !(magnet.selected && magnet.selected !== vm.socket.id); 
+        }
+
+        function getClass(magnet) {
+
+            if (!magnet.selected) {
+                return;
+            }
+            if (magnet.selected === vm.socket.id) {
+                return 'selected'; 
+            }
+            if (magnet.selected !== vm.socket.id) {
+                return 'inactive';
+            }
+        }
+
+        // Listeners
+        $scope.$on('$destroy', function () {
+            // Unsubscribe from socket service on tear down
+            socket.unsyncUpdates('magnet');
+        });
+    }
 
 })();

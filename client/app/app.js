@@ -1,24 +1,24 @@
 (function() {
 
-  // TODO: duplication in and better understanding of prehook in server/api/magnet/magnet.socket.js
-  // TODO: preloader directive
+    // TODO: duplication in and better understanding of prehook in server/api/magnet/magnet.socket.js
+    // TODO: preloader directive
 
-  'use strict';
+    'use strict';
 
-  angular.module('magnetsApp', [
-    'ngCookies',
-    'ngResource',
-    'ngSanitize',
-    'ngRoute',
-    'ngDragDrop',
-    'btford.socket-io'
-  ])
+    angular.module('magnetsApp', [
+        'ngCookies',
+        'ngResource',
+        'ngSanitize',
+        'ngRoute',
+        'ngDragDrop',
+        'btford.socket-io'
+    ])
     .config(function ($routeProvider, $locationProvider) {
-      $routeProvider
-        .otherwise({
-          redirectTo: '/'
-        });
+        $routeProvider
+            .otherwise({
+                redirectTo: '/'
+            });
 
-      $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true);
     });
 })();

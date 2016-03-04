@@ -1,15 +1,21 @@
-'use strict';
+(function() {
 
-angular.module('magnetsApp')
-  .controller('NavbarCtrl', function ($scope, $location) {
-    $scope.menu = [
-      { 'title': 'Home', 'link': '/' },
-      { 'title': 'Admin', 'link': '/admin' }
-    ];
+    'use strict';
 
-    $scope.isCollapsed = true;
+    angular.module('magnetsApp')
+        .controller('NavbarCtrl', NavbarCtrl);
 
-    $scope.isActive = function(route) {
-      return route === $location.path();
-    };
-  });
+    function NavbarCtrl($scope, $location) {
+        $scope.menu = [
+            { 'title': 'Home', 'link': '/' },
+            { 'title': 'Admin', 'link': '/admin' }
+        ];
+
+        $scope.isCollapsed = true;
+
+        $scope.isActive = function(route) {
+            return route === $location.path();
+        };
+    }
+})();
+
