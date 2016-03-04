@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     /* global io */
     'use strict';
@@ -6,7 +6,7 @@
     angular.module('magnetsApp')
         .factory('socket', socketService);
 
-        function socketService(socketFactory) {
+        function socketService (socketFactory) {
 
             // socket.io now auto-configures its connection when we ommit a connection url
             var ioSocket = io('', {
@@ -22,16 +22,16 @@
             return {
                 socket: socket,
 
-                syncSocket: function(model) {
-                    
-                    socket.on('socket:connect', function(id, count) {
+                syncSocket: function (model) {
+
+                    socket.on('socket:connect', function (id, count) {
                         if (!model.id) {
                             model.id = id;
                         }
                         model.count = count;
                     });
 
-                    socket.on('socket:disconnect', function(id, count) {
+                    socket.on('socket:disconnect', function (id, count) {
                         model.count = count;
                     });
                 },

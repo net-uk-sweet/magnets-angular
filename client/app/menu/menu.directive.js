@@ -1,11 +1,11 @@
-(function() {
+(function () {
 
     'use strict';
 
     angular.module('magnetsApp')
-        .directive('swMenu', swMenu); 
+        .directive('swMenu', swMenu);
 
-    function swMenu($compile) {
+    function swMenu ($compile) {
         return {
             templateUrl: 'app/menu/menu.html',
             restrict: 'EA',
@@ -14,14 +14,14 @@
                 addMagnet: '&',
                 colors: '=' // @ for strings, = for 2-way binding, & for function
             },
-            controller: function($scope) {
+            controller: function ($scope) {
 
                 // If you don't understand it when you come back to it, it's probably
                 // to trickster. Plus this method appears to generate unnecessary
-                // characters which need to be removed in the createLetter method 
+                // characters which need to be removed in the createLetter method
                 // below. Perhaps a candidate for a refactor!
                 $scope.letters = _.map(_.range(
-                    'a'.charCodeAt(0), 
+                    'a'.charCodeAt(0),
                     'z'.charCodeAt(0) + 1), String.fromCharCode);
 
                 $scope.index = 0;
@@ -29,19 +29,19 @@
 
                 var color, letter;
 
-                $scope.next = function() {
-                    $scope.index = $scope.index === $scope.letters.length - 1 ? 
+                $scope.next = function () {
+                    $scope.index = $scope.index === $scope.letters.length - 1 ?
                     0 : $scope.index + 1;
                     createLetter();
                 };
 
-                $scope.previous = function() {
-                    $scope.index = $scope.index === 0 ? 
+                $scope.previous = function () {
+                    $scope.index = $scope.index === 0 ?
                     $scope.letters.length - 1 : $scope.index - 1;
                     createLetter();
                 };
 
-                $scope.stop = function(event, ui) {
+                $scope.stop = function (event, ui) {
 
                     $scope.boardController.addMagnet({
                         character: letter,
@@ -54,9 +54,9 @@
                     createLetter();
                 };
 
-                function createLetter() { 
+                function createLetter () {
                     letter = $scope.magnet.letter = $scope.letters[$scope.index].substr(0, 1);
-                    color = $scope.magnet.color = $scope.colors[Math.round(Math.random() * 
+                    color = $scope.magnet.color = $scope.colors[Math.round(Math.random() *
                         ($scope.colors.length - 1))];
                 }
 
@@ -67,7 +67,7 @@
                 scope.boardController = controller;
 
                 // Watch for the letter property on the above controller to change
-                scope.$watch('magnet', function() {
+                scope.$watch('magnet', function () {
 
                     // And create the appropriate letter element
                     var letter = angular.element(

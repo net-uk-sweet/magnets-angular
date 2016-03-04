@@ -1,20 +1,20 @@
-(function() {
+(function () {
 
     'use strict';
 
     angular.module('magnetsApp')
         .directive('swBoard', swBoard);
 
-    function swBoard() {
+    function swBoard () {
 
         return {
             restrict: 'EA',
             scope: {
                 addMagnet: '='
             },
-            controller: function($scope, $element) {
+            controller: function ($scope, $element) {
 
-                this.addMagnet = function(magnet) {
+                this.addMagnet = function (magnet) {
 
                     var offset = $element.find('[data-board]').offset();
 

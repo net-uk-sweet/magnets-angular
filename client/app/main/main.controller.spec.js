@@ -57,7 +57,7 @@ describe('Controller: MainCtrl', function () {
     $httpBackend = _$httpBackend_;
     $httpBackend.expectGET('/api/magnets').respond(response);
     // Dunno if I need this one
-    //$httpBackend.expectGET('/api/magnets/0').respond(response[0]);
+    // $httpBackend.expectGET('/api/magnets/0').respond(response[0]);
 
     scope = $rootScope.$new();
     MainCtrl = $controller('MainCtrl', {
@@ -66,18 +66,18 @@ describe('Controller: MainCtrl', function () {
   }));
 
   // This is a spec (or test)
-  it('should have an initial magnets state', function() {
+  it('should have an initial magnets state', function () {
     // These are expectations (or assertions), if all of them are true the spec passes
     expect(scope.magnets).toBeDefined();
     // Expect takes an actual value and is chained to a matcher function containing the expected value
     expect(scope.magnets.length).toBe(0); // same as ===
   });
 
-  it('should have an initial magnet state', function() {
+  it('should have an initial magnet state', function () {
     // It actually doesn't matter to angular whether this is defined or not.
     expect(scope.magnet).toEqual({}); // toBe == strict equality
     // To negate we can do this :-
-    //expect(scope.magnet).not.toBeDefined();
+    // expect(scope.magnet).not.toBeDefined();
   });
 
   it('should attach a list of things to the scope', function () {
@@ -94,10 +94,10 @@ describe('Controller: MainCtrl', function () {
   });
 */
 
-  describe('when calling the addMagnet function', function() {
-    beforeEach(function() {
+  describe('when calling the addMagnet function', function () {
+    beforeEach(function () {
       scope.magnet = response[0];
-      //spyOn($http, 'post');
+      // spyOn($http, 'post');
       scope.addMagnet();
     });
 
@@ -106,11 +106,11 @@ describe('Controller: MainCtrl', function () {
     //   expect($http.post).toHaveBeenCalled();
     // });
 
-    it('should return if magnet is empty', function() {
+    it('should return if magnet is empty', function () {
       expect(scope.magnet).toEqual({});
     });
 
-    it('should reset the value of magnet', function() {
+    it('should reset the value of magnet', function () {
       expect(scope.magnet).toEqual({});
     });
   });
@@ -120,10 +120,10 @@ describe('Controller: MainCtrl', function () {
   xdescribe('when calling the addMagnet function', function() {
 
     beforeEach(function() {
-      //scope.apply(function() {
+      // scope.apply(function() {
         scope.magnet = { character: 't', x: 10, y: 10, rotation: 100 };
         scope.addMagnet();
-      //});
+      // });
 
       it('should reset the value of magnet', function() {
         expect(scope.magnet.toBe({}));

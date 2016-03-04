@@ -1,15 +1,15 @@
-(function() {
+(function () {
 
     'use strict';
 
     angular.module('magnetsApp')
         .controller('MainController', MainController);
 
-    function MainController($scope, $log, magnetService, socket) {
+    function MainController ($scope, $log, magnetService, socket) {
 
         var vm = this;
 
-        vm.colors = ['red', 'yellow', 'green', 'blue'];  
+        vm.colors = ['red', 'yellow', 'green', 'blue'];
         vm.socket = {}; // info about the socket connection
         vm.magnets = []; // our data
 
@@ -29,7 +29,7 @@
         vm.addMagnet = addMagnet;
 
         // Grab the initial data
-        magnetService.getMagnets().success(function(magnets) {
+        magnetService.getMagnets().success(function (magnets) {
 
         $log.info('Got initial data');
 
@@ -40,17 +40,17 @@
             socket.syncUpdates('magnet', vm.magnets);
         });
 
-        function update(magnet) {
+        function update (magnet) {
             magnetService.updateMagnet(magnet);
         }
 
-        function setPosition(event, ui, magnet) {
-        magnet.x = ui.position.left;
+        function setPosition (event, ui, magnet) {
+            magnet.x = ui.position.left;
             magnet.y = ui.position.top;
             update(magnet);
         }
 
-        function setSelected(magnet) {
+        function setSelected (magnet) {
             if (!magnet.selected) {
                 magnet.newSelected = true;
                 magnet.selected = vm.socket.id;
@@ -58,11 +58,11 @@
             }
         }
 
-        function getSelected() {
+        function getSelected () {
             return _.findWhere(vm.magnets, { selected: vm.socket.id });
         }
 
-        function setSelectedColor(color) {
+        function setSelectedColor (color) {
 
             var selected = getSelected();
 
@@ -72,7 +72,7 @@
             }
         }
 
-        function rotateSelected() {
+        function rotateSelected () {
 
             var selected = getSelected();
 
@@ -82,7 +82,7 @@
             }
         }
 
-        function deleteSelected() {
+        function deleteSelected () {
 
             var selected = getSelected();
 
@@ -91,7 +91,7 @@
             }
         }
 
-        function addMagnet(magnet) {
+        function addMagnet (magnet) {
             magnet.newSelected = true;
             magnet.selected = vm.socket.id;
             magnetService.addMagnet(magnet);
@@ -99,21 +99,21 @@
 
         // TODO: I think the fact that I'm passing the magnet in to all these
         //  functions might be an indication that I need to abstract some logic
-        function isSelected(magnet) {
+        function isSelected (magnet) {
             return magnet.selected === vm.socket.id;
         }
 
-        function isDraggable(magnet) {
-            return !(magnet.selected && magnet.selected !== vm.socket.id); 
+        function isDraggable (magnet) {
+            return !(magnet.selected && magnet.selected !== vm.socket.id);
         }
 
-        function getClass(magnet) {
+        function getClass (magnet) {
 
             if (!magnet.selected) {
                 return;
             }
             if (magnet.selected === vm.socket.id) {
-                return 'selected'; 
+                return 'selected';
             }
             if (magnet.selected !== vm.socket.id) {
                 return 'inactive';
