@@ -1,7 +1,7 @@
 <div class="logo-holder">  
   <a href="http://ian.sweet.uk.net" class="logo shadow">net.uk.sweet</a>
 </div>
-<div class="toolbar">
+<div class="toolbar" ng-show="main.isLoaded()">
   <div class="menu" sw-menu colors="main.colors"></div>
   <ul ng-enabled="!main.getSelected()" class="palette">
     <li ng-class="{disabled: !main.getSelected() || main.getSelected().color === color}" 

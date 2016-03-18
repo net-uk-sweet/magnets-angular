@@ -5,7 +5,7 @@
     angular.module('magnetsApp')
         .directive('swMenu', swMenu);
 
-    function swMenu ($compile) {
+    function swMenu ($compile, colorService, rotationService) {
         return {
             templateUrl: 'app/menu/menu.html',
             restrict: 'EA',
@@ -31,7 +31,7 @@
 
                 $scope.next = function () {
                     $scope.index = $scope.index === $scope.letters.length - 1 ?
-                    0 : $scope.index + 1;
+                        0 : $scope.index + 1;
                     createLetter();
                 };
 
@@ -48,7 +48,7 @@
                         color: color,
                         x: ui.offset.left,
                         y: ui.offset.top,
-                        rotation: 0,
+                        rotation: rotationService.getRandomRotation(),
                         selected: false
                     });
                     createLetter();
@@ -56,8 +56,7 @@
 
                 function createLetter () {
                     letter = $scope.magnet.letter = $scope.letters[$scope.index].substr(0, 1);
-                    color = $scope.magnet.color = $scope.colors[Math.round(Math.random() *
-                        ($scope.colors.length - 1))];
+                    color = $scope.magnet.color = colorService.getRandomColor();
                 }
 
                 createLetter();

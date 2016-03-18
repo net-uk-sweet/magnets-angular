@@ -5,15 +5,16 @@
     angular.module('magnetsApp')
         .controller('MainController', MainController);
 
-    function MainController ($scope, $log, magnetService, socket) {
+    function MainController ($scope, $log, magnetService, colorService, rotationService, socket) {
 
         var vm = this;
 
-        vm.colors = ['red', 'yellow', 'green', 'blue'];
         vm.socket = {}; // info about the socket connection
         vm.magnets = []; // our data
+        vm.colors = colorService.colors;
 
         // Controller API
+        vm.isLoaded = isLoaded;
         vm.setPosition = setPosition;
         vm.setSelected = setSelected;
         vm.getSelected = getSelected;
@@ -39,6 +40,10 @@
             socket.syncSocket(vm.socket);
             socket.syncUpdates('magnet', vm.magnets);
         });
+
+        function isLoaded () {
+            return vm.magnets.length && vm.preloaderComplete;
+        }
 
         function update (magnet) {
             magnetService.updateMagnet(magnet);
@@ -74,10 +79,12 @@
 
         function rotateSelected () {
 
-            var selected = getSelected();
+            var selected = getSelected(),
+                newRotation;
 
             if (selected) {
-                selected.rotation = (selected.rotation + 15) % 360;
+                newRotation = rotationService.getNewRotation(selected.rotation);
+                selected.rotation = newRotation;
                 update(selected);
             }
         }

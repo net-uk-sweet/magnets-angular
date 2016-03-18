@@ -2,7 +2,10 @@
   <div class="wrapper">
     <div class="frame" sw-board add-magnet="main.addMagnet">
 		<div class="board" data-drop="true" data-jqyoui-droppable="true" data-board>
-			<ul class="magnets">	
+			<ul class="preloader" ng-show="!main.isLoaded()" 
+				sw-preloader magnets-loaded="main.magnets.length" preloader-complete="main.preloaderComplete">				
+			</ul>
+			<ul class="magnets" ng-show="main.isLoaded()">	
 				<li ng-repeat="magnet in main.magnets"
 				    class="magnet {{magnet.color}} magnet-{{magnet.character}}"
 				    ng-class="main.getClass(magnet)"
