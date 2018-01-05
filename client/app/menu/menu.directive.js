@@ -14,7 +14,7 @@
                 addMagnet: '&',
                 colors: '=' // @ for strings, = for 2-way binding, & for function
             },
-            controller: function ($scope) {
+            controller: ['$scope', function ($scope) {
 
                 // If you don't understand it when you come back to it, it's probably
                 // to trickster. Plus this method appears to generate unnecessary
@@ -60,7 +60,8 @@
                 }
 
                 createLetter();
-            },
+            }],
+
             link: function (scope, element, attrs, controller) {
 
                 scope.boardController = controller;

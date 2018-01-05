@@ -13,7 +13,7 @@
                 magnetsLoaded: '=magnetsLoaded',
                 preloaderComplete: '=preloaderComplete'
             },
-            controller: function($scope, $element, $interval) {
+            controller: ['$scope', '$element', '$interval', function($scope, $element, $interval) {
 
                 var message ='loading',
                     index = 0;
@@ -48,7 +48,7 @@
                         .attr('style', 'transform: rotate(' + rotationService.getRandomRotation() + 'deg)')
                         .addClass(colorService.getRandomColor());
                 }
-            }
+            }]
         };
     }
 

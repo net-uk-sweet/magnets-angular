@@ -12,7 +12,7 @@
             scope: {
                 addMagnet: '='
             },
-            controller: function ($scope, $element) {
+            controller: ['$scope', '$element', function ($scope, $element) {
 
                 this.addMagnet = function (magnet) {
 
@@ -24,7 +24,7 @@
 
                     $scope.addMagnet(magnet);
                 };
-            }
+            }]
         };
     }
 })();
